@@ -4,8 +4,12 @@ import { Greet } from "./components/Greet";
 import { Person } from "./components/Person";
 import { PersonList } from "./components/PersonList";
 import { Status } from "./components/Status";
+import { Login } from "./components/Login";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [loginCheck, setLoginCheck] = useState(false)
+  const [username, setUsername] = useState('')
   const [randName, setRandName] = useState("");
   const [fullRandName, setFullRandName] = useState({
     first: "",
@@ -77,6 +81,7 @@ function App() {
   ];
 
   useEffect(() => {
+    if (loggedIn && !loginCheck){
     let results = ["success", "failure", "fatal"];
     setTimeout(() => {
       const randomStatus = results[Math.floor(Math.random() * 3)];
@@ -137,14 +142,27 @@ function App() {
     randomNameObject();
     personNameList();
     setNameList(namesList);
-  }, []);
+    setLoginCheck(true)
+  }
+  }, [loggedIn]);
+
+ const handleLogin = () => {
+  setLoggedIn(true)
+ }
 
   return (
     <div className="App">
-      <Greet name={randName} messageCount={messageNum} isLoggedIn={false} />
-      <Status status={pageStatus} reason={pageReason} />
+      {!loggedIn ? 
+      <Login login={loggedIn} onLogin={handleLogin} /> 
+      : 
+      <>
+      <Greet name={randName} messageCount={messageNum} isLoggedIn={loggedIn} />
+      <Status status={pageStatus} reason={pageReason} isLoggedIn={loggedIn} />
       <Person name={personName} randomName={fullRandName} />
       <PersonList names={nameList} />
+      </>
+      }
+      
     </div>
   );
 }
