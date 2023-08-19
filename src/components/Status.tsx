@@ -8,8 +8,14 @@ type StatusProps = {
 };
 
 export const Status = (props: StatusProps) => {
-  let message;
-  let reply;
+  let message: string;
+  let reply: string;
+
+useEffect(()=>{
+if (message === 'loading'){
+
+}
+}, [])
 
         if (props.status === "loading") {
         message = "Loading...";

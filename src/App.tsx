@@ -148,15 +148,19 @@ function App() {
 
  const handleLogin = () => {
   setLoggedIn(true)
- }
+}
+
+const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+setUsername(e.target.value)
+}
 
   return (
     <div className="App">
       {!loggedIn ? 
-      <Login login={loggedIn} onLogin={handleLogin} /> 
+      <Login login={loggedIn} onLogin={handleLogin} handleUsername={handleUsername} username={username} /> 
       : 
       <>
-      <Greet name={randName} messageCount={messageNum} isLoggedIn={loggedIn} />
+      <Greet name={username} messageCount={messageNum} isLoggedIn={loggedIn} />
       <Status status={pageStatus} reason={pageReason} isLoggedIn={loggedIn} />
       <Person name={personName} randomName={fullRandName} />
       <PersonList names={nameList} />
